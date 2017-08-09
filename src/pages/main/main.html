@@ -1,0 +1,23 @@
+<ion-content>
+    <ion-list>
+      <ion-item #from id="from">
+        <ion-label>Saindo de</ion-label>
+        <ion-select [(ngModel)]="fromSelection">
+          <ion-option *ngFor="let start of starts" [value]= "start">{{ start.name }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text" placeholder="Escolha um destino" (ngModelChange)="isRoute($event)"></ion-input>
+      </ion-item>
+      <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="departure"></ion-datetime>
+    </ion-item>
+    <ion-item>
+    <button ion-button (click)="go()">QUERO VAZAR!</button>
+    </ion-item>
+  </ion-list>
+  <div #map id="map">
+  </div>  
+  
+</ion-content>
