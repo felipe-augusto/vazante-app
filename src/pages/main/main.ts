@@ -24,6 +24,8 @@ export class MainPage {
   directionsDisplay;
   directionsRenderer;
   lastRoute;
+  // 
+  sentLocation;
 
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
@@ -38,6 +40,9 @@ export class MainPage {
         coords: '-23.643108, -46.529357'
       }
     ]
+
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsRenderer;
   }
 
   ionViewDidLoad() {
@@ -69,11 +74,6 @@ export class MainPage {
   }
 
   render() {
-    this.directionsService = new google.maps.DirectionsService;
-    this.directionsDisplay = new google.maps.DirectionsRenderer;
-
-    console.log(this.fromSelection.coords)
-
     this.directionsService.route({ 
       origin: this.fromSelection.coords, 
       destination: this.address.place, 
@@ -91,6 +91,16 @@ export class MainPage {
         this.lastRoute = this.directionsRenderer.getDirections();
       }.bind(this))
     }.bind(this));
+  }
+
+  match() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    this.http.post('http://localhost:9000/api/matcher', this.sentLocation, { headers: headers }).subscribe(
+      (res) => console.log(res.json()),
+      (e) => console.log(e)
+    )
   }
 
   go() {
@@ -111,12 +121,12 @@ export class MainPage {
     const payload = {
       user_id: "my user id",
       coords: coords,
-      time: new Date()
+      time: new Date().getTime().toString()
     }
 
-    // this.http.post('http://localhost:9000/api/route', payload, { headers: headers }).subscribe(
-    //   (res) => console.log(res.json()),
-    //   (e) => console.log(e)
-    // )
+    this.http.post('http://localhost:9000/api/location', payload, { headers: headers }).subscribe(
+      (res) => this.sentLocation = res.json(),
+      (e) => console.log(e)
+    )
   }
 }
