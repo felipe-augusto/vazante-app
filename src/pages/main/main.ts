@@ -13,6 +13,7 @@ declare var google;
 export class MainPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('from') from: ElementRef;
+  @ViewChild('test') test: ElementRef;
   map: any; // created map
   toSelection;
   fromSelection;
@@ -50,7 +51,7 @@ export class MainPage {
   }
 
   loadMap() {
-    var start = new google.maps.LatLng(-23.644359,-46.528339)
+    var start = new google.maps.LatLng(-23.644359, -46.528339)
     var myOptions = {
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       zoom: 16,
@@ -58,10 +59,11 @@ export class MainPage {
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, myOptions)
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.from.nativeElement)
+    // this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.from.nativeElement)
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.test.nativeElement)
   }
 
-  showAddressModal () {
+  showAddressModal() {
     let modal = this.modalCtrl.create(Autocomplete);
     let me = this;
     modal.onDidDismiss(data => {
@@ -74,9 +76,9 @@ export class MainPage {
   }
 
   render() {
-    this.directionsService.route({ 
-      origin: this.fromSelection.coords, 
-      destination: this.address.place, 
+    this.directionsService.route({
+      origin: this.fromSelection.coords,
+      destination: this.address.place,
       travelMode: google.maps.DirectionsTravelMode.WALKING
     }, function(result) {
       this.lastRoute = result
@@ -105,7 +107,7 @@ export class MainPage {
 
   go() {
     const coords = this.lastRoute.routes[0].legs[0].steps.reduce(function(arr, step) {
-      step.path.map(function (path) {
+      step.path.map(function(path) {
         arr.push({
           lat: path.lat(),
           lng: path.lng()

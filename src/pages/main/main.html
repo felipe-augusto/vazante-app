@@ -1,6 +1,6 @@
-<ion-content>
-    <ion-list>
-      <ion-item #from id="from">
+<ion-content >
+  <div #test id="test">
+    <ion-item #from id="from">
         <ion-label>Saindo de</ion-label>
         <ion-select [(ngModel)]="fromSelection">
           <ion-option *ngFor="let start of starts" [value]= "start">{{ start.name }}</ion-option>
@@ -18,7 +18,11 @@
     <button ion-button (click)="match()">QUERO VER PESSOINHAS!</button>
     </ion-item>
   </ion-list>
+  </div>
   <div #map id="map">
-  </div>  
-  
+  </div>
+  <button ion-button full (click)="go()">QUERO VAZAR!</button>
+
 </ion-content>
+
+<div ></div>
