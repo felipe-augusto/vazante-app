@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, LoadingController } from 'ionic-angular';
 import { Http, Headers} from '@angular/http';
 
 import { Autocomplete } from '../../components/autocomplete/autocomplete'
+import { MatcherPage } from '../../pages/matcher/matcher'
 
 declare var google;
 
@@ -29,9 +30,10 @@ export class MainPage {
   // 
   sentLocation;
 
-  constructor(public navCtrl: NavController,
+  constructor(public nav: NavController,
     private modalCtrl: ModalController,
-    private http: Http) {
+    private http: Http,
+    public loadingCtrl: LoadingController) {
     this.departure = new Date()
 
     this.address = {
@@ -39,6 +41,14 @@ export class MainPage {
     };
 
     this.starts = [
+     {
+        name: "Saída Aboliçao",
+        coords: '-23.643709, -46.527416'
+      },  
+      {
+        name: "Saída Carrefour",
+        coords: '-23.646107, -46.527648'
+      },
       {
         name: "Saída Rockfeller",
         coords: '-23.643108, -46.529357'
@@ -126,13 +136,21 @@ export class MainPage {
     headers.append('Content-Type', 'application/json');
 
     const payload = {
-      user_id: "5973a178758da13b292429c6",
+      user_id: "5981186e7e448500040b30f6",
       coords: coords,
-      time: new Date().getTime().toString()
+      time: "1502993386847" // new Date().getTime().toString()
     }
 
-    this.http.post('http://localhost:9000/api/location', payload, { headers: headers }).subscribe(
-      (res) => this.sentLocation = res.json(),
+    let loading = this.loadingCtrl.create({
+      content: 'Aguarde...'
+    });
+    loading.present();
+
+    this.http.post('https://vazante.herokuapp.com/api/location', payload, { headers: headers }).subscribe(
+      (res) => {
+        loading.dismiss()
+        this.nav.push(MatcherPage, res.json())
+      },
       (e) => console.log(e)
     )
   }

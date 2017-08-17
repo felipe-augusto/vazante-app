@@ -1,0 +1,23 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Resultados</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list class="top">
+    <ion-card *ngFor="let card of data">
+      <ion-item>
+        <ion-avatar item-start class="{{ card.gender }}">
+          <img src="{{ card.picture }}">
+        </ion-avatar>
+        <h2>{{ card.name }}</h2>
+        <p class="percentage">{{ parse(card.percentage) }} %</p>
+        <ion-col center text-center>
+        <ion-note> 
+          {{ convertTime(card.time) }}
+        </ion-note>
+      </ion-col>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+</ion-content>

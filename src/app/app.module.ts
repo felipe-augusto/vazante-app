@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MainPage } from '../pages/main/main';
+import { MatcherPage } from '../pages/matcher/matcher';
 
 import { SocialService } from '../services/social-service'
 import { Config } from '../config/config'
@@ -21,6 +22,7 @@ import { Autocomplete } from '../components/autocomplete/autocomplete'
     HomePage,
     MainPage,
     Autocomplete,
+    MatcherPage,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +35,7 @@ import { Autocomplete } from '../components/autocomplete/autocomplete'
     HomePage,
     MainPage,
     Autocomplete,
+    MatcherPage,
   ],
   providers: [
     StatusBar,
