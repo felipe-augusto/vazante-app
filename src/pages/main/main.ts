@@ -13,7 +13,8 @@ declare var google;
 export class MainPage {
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('from') from: ElementRef;
-  @ViewChild('test') test: ElementRef;
+  @ViewChild('form') form: ElementRef;
+  @ViewChild('buttons') buttons: ElementRef;
   map: any; // created map
   toSelection;
   fromSelection;
@@ -31,6 +32,8 @@ export class MainPage {
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
     private http: Http) {
+    this.departure = new Date()
+
     this.address = {
       place: ''
     };
@@ -59,8 +62,10 @@ export class MainPage {
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, myOptions)
-    // this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.from.nativeElement)
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.test.nativeElement)
+    this.map.controls[google.maps.ControlPosition.BOTTOM_CENTER]
+      .push(this.buttons.nativeElement)
+    this.map.controls[google.maps.ControlPosition.TOP_CENTER]
+      .push(this.form.nativeElement)
   }
 
   showAddressModal() {
@@ -121,7 +126,7 @@ export class MainPage {
     headers.append('Content-Type', 'application/json');
 
     const payload = {
-      user_id: "my user id",
+      user_id: "5973a178758da13b292429c6",
       coords: coords,
       time: new Date().getTime().toString()
     }

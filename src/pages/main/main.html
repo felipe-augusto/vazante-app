@@ -1,5 +1,6 @@
 <ion-content >
-  <div #test id="test">
+  <div #form id="form">
+    <ion-list>
     <ion-item #from id="from">
         <ion-label>Saindo de</ion-label>
         <ion-select [(ngModel)]="fromSelection">
@@ -10,19 +11,15 @@
         <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text" placeholder="Escolha um destino" (ngModelChange)="isRoute($event)"></ion-input>
       </ion-item>
       <ion-item>
-      <ion-label>Date</ion-label>
+      <ion-label>Horário</ion-label>
       <ion-datetime displayFormat="HH:mm" [(ngModel)]="departure"></ion-datetime>
-    </ion-item>
-    <ion-item>
-    <button ion-button (click)="go()">QUERO VAZAR!</button>
-    <button ion-button (click)="match()">QUERO VER PESSOINHAS!</button>
     </ion-item>
   </ion-list>
   </div>
   <div #map id="map">
   </div>
-  <button ion-button full (click)="go()">QUERO VAZAR!</button>
-
+  <div #buttons id="buttons">
+    <button ion-button full (click)="go()">QUERO VAZAR!</button>
+    <button ion-button (click)="match()">QUERO VER PESSOINHAS!</button>
+  </div>
 </ion-content>
-
-<div ></div>
